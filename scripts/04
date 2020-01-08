@@ -1,0 +1,24 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    04                                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: miclaude <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/02/07 14:58:06 by miclaude          #+#    #+#              #
+#    Updated: 2018/02/07 15:01:23 by miclaude         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+if [ -e /var/log/checksum ]
+then
+	md5sum /etc/crontab > /tmp/checksum
+	diff -q /tmp/checksum /var/log/checksum
+	if [ $? -ne 0 ]
+	then
+		echo "Le fichier /etc/crontab a ete modifie" | mail -s "crontab" root
+	md5sum /etc/crontab > /var/log/checksum
+fi
+else
+	md5sum /etc/crontab > /var/log/checksum
+fi
